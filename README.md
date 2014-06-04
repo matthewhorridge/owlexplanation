@@ -5,7 +5,7 @@ An API and reference implementation for generating justifications for entailment
 
 Maven Dependency
 ----------------
-```
+```xml
 <dependency>
     <groupId>net.sourceforge.owlapitools</groupId>
     <artifactId>owlexplanation</artifactId>
@@ -15,7 +15,7 @@ Maven Dependency
 
 Example Usage
 -------------
-```[java]
+```java
 OWLReasonerFactory rf = ; // Get hold of a reasoner factory
 OWLOntology ont = ; // Reference to an OWLOntology
 
