@@ -26,7 +26,7 @@ ExplanationGeneratorFactory<OWLAxiom> genFac = ExplanationManager.createExplanat
 // Now create the actual explanation generator for our ontology
 ExplanationGenerator<OWLAxiom> gen = genFac.createExplanationGenerator(ont);
 
-// As for explanations for some entailment
+// Ask for explanations for some entailment
 OWLAxiom entailment ; // Get a reference to the axiom that represents the entailment that we want explanation for
 
 // Get our explanations.  Ask for a maximum of 5.
