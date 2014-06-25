@@ -33,5 +33,9 @@ OWLAxiom entailment ; // Get a reference to the axiom that represents the entail
 Set<Explanation<OWLAxiom>> expl = gen.getExplanations(entailment, 5);
 ```
 
+Explanations for Inconsistent Ontologies
+----------------------------------------
 
+To obtain explanations for inconsistent ontologies the ```InconsistentOntologyExplanationGeneratorFactory``` can
+be used.  Ask for explanations for ```SubClassOf(owl:Thing owl:Nothing)```.
 
