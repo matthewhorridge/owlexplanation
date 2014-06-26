@@ -46,7 +46,7 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sourceforge.owlapitools</groupId>
+            <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>telemetry</artifactId>
             <version>1.0.0</version>
         </dependency>
