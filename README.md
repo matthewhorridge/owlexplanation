@@ -16,6 +16,10 @@ Maven Dependency
 Example Usage
 -------------
 ```java
+import org.semanticweb.owl.explanation.api.*;
+import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+
 OWLReasonerFactory rf = ; // Get hold of a reasoner factory
 OWLOntology ont = ; // Reference to an OWLOntology
 
