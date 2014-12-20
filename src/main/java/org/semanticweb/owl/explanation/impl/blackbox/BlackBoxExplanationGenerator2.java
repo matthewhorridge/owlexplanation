@@ -149,7 +149,6 @@ public class BlackBoxExplanationGenerator2<E> implements ExplanationGenerator<E>
      * Computes a single justification for an entailment.
      * @param entailment The entailment
      * @return The justification or an empty set if the entailment does not hold.
-     * @throws OWLException
      */
     protected Explanation<E> computeExplanation(E entailment) {
 

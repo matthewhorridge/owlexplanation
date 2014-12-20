@@ -1,11 +1,10 @@
 package org.semanticweb.owl.explanation.api;
 
-import org.semanticweb.owl.explanation.impl.blackbox.hst.ExplanationComparator;
-import org.semanticweb.owl.explanation.telemetry.TelemetryObject;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.OWLXMLOntologyFormat;
 import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.owl.explanation.ordering.DefaultExplanationOrderer;
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
 
 import java.io.*;
 import java.util.*;
@@ -144,7 +143,7 @@ public class Explanation<E> {
         Collection<OWLAxiom> orderedAxioms;
         if (entailment instanceof OWLAxiom) {
             OWLAxiom entailedAxiom = (OWLAxiom) entailment;
-            DefaultExplanationOrderer orderer = new DefaultExplanationOrderer();
+            ExplanationOrderer orderer = new ExplanationOrdererImpl(OWLManager.createOWLOntologyManager());
             List<OWLAxiom> axs = new ArrayList<OWLAxiom>(orderer.getOrderedExplanation(entailedAxiom, justification).fillDepthFirst());
             axs.remove(0);
             orderedAxioms = axs;

@@ -2,11 +2,13 @@ package org.semanticweb.owl.explanation.impl.blackbox;
 
 import org.semanticweb.owl.explanation.api.*;
 import org.semanticweb.owl.explanation.api.Explanation;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.bhig.util.MutableTree;
 import uk.ac.manchester.cs.bhig.util.NodeRenderer;
 import uk.ac.manchester.cs.bhig.util.Tree;
-import uk.ac.manchester.cs.owl.explanation.ordering.DefaultExplanationOrderer;
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
 
 import java.io.*;
 import java.util.*;
@@ -39,7 +41,7 @@ import java.util.logging.Logger;
 /**
  * Author: Matthew Horridge<br> The University Of Manchester<br> Information Management Group<br> Date:
  * 03-Sep-2008<br><br>
- * <p/>
+ *
  * An explanation generator that uses black box techniques to compute explanations.  The
  * generation technique consists of two phases: first and expansion phase, and then a
  * contraction phase.  These phases are implemented as plugin strategies.
@@ -205,6 +207,7 @@ public class BlackBoxExplanationGenerator<E> implements ExplanationGenerator<E> 
      *
      * @param entailment The entailment
      * @return The justification or an empty set if the entailment does not hold.
+     * @throws org.semanticweb.owlapi.model.OWLException if there was a problem.
      */
     protected Explanation<E> computeExplanation(E entailment) throws OWLException {
         if (isLoggable()) {
@@ -471,7 +474,7 @@ public class BlackBoxExplanationGenerator<E> implements ExplanationGenerator<E> 
         if (isLoggable()) {
             log("Expanding axioms");
             StringBuilder sb = new StringBuilder();
-            DefaultExplanationOrderer orderer = new DefaultExplanationOrderer();
+            ExplanationOrderer orderer = new ExplanationOrdererImpl(OWLManager.createOWLOntologyManager());
             Tree<OWLAxiom> tree = orderer.getOrderedExplanation((OWLAxiom) checker.getEntailment(), expandedAxioms);
             List<OWLAxiom> axiomList = tree.fillDepthFirst();
             for (OWLAxiom ax : axiomList) {

@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * Author: Matthew Horridge<br> The University Of Manchester<br> Information Management Group<br> Date:
  * 03-Sep-2008<br><br>
- * <p/>
+ *
  * Represents a general purpose interface for obtaining explanations. The interface does not commit to the type of
  * entailment for which an explanation is to be generated.  It is also assumed that there could be more than one
  * explanation for a given entailment.

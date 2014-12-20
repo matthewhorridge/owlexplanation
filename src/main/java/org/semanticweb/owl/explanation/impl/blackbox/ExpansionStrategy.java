@@ -42,7 +42,7 @@ public interface ExpansionStrategy {
      * @param axioms The input set.  The entailment may or may not hold in this set.
      * @param checker The entailment checker that should be used to check for entailment at
      * each stage.
-     * @param progressMonitor
+     * @param progressMonitor A progress monitor.  Not {@code null}.
      * @return A set of axioms that the entailment holds in, or the empty set if the entailment does not hold in the
      * input set.
      */

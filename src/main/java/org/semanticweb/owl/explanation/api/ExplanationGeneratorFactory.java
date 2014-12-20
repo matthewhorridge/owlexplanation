@@ -32,7 +32,7 @@ import java.util.Set;
 /**
  * Author: Matthew Horridge<br> The University Of Manchester<br> Information Management Group<br> Date:
  * 03-Sep-2008<br><br>
- * <p/>
+ *
  * An interface that describes a factory that can create an explanation generator.  It is assumed that an explanation
  * generator generates explanations from a set of source axioms that are obtained from a set of ontolgies.
  */
