@@ -1,13 +1,16 @@
 package org.semanticweb.owl.explanation.api;
 
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.OWLXMLOntologyFormat;
-import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
-import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
-
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 /*
  * Copyright (C) 2008, University of Manchester
  *
@@ -30,6 +33,24 @@ import java.util.*;
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+import java.util.TreeSet;
+
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.dlsyntax.renderer.DLSyntaxObjectRenderer;
+import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLAnnotation;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
+import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
 
 
 /**
@@ -151,10 +172,10 @@ public class Explanation<E> {
         else {
             orderedAxioms = new TreeSet<OWLAxiom>(justification);
         }
-
+        DLSyntaxObjectRenderer renderer = new DLSyntaxObjectRenderer();
         for (OWLAxiom ax : orderedAxioms) {
             sb.append("\t");
-            sb.append(ax);
+            sb.append(renderer.render(ax));
             sb.append("\n");
         }
         return sb.toString();
@@ -193,7 +214,7 @@ public class Explanation<E> {
             OWLAxiom annotatedEntailment = explanation.getEntailment().getAnnotatedAxiom(Collections.singleton(entailmentAnnotation));
             manager.addAxiom(ontology, annotatedEntailment);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(os);
-            OWLXMLOntologyFormat justificationOntologyFormat = new OWLXMLOntologyFormat();
+            OWLXMLDocumentFormat justificationOntologyFormat = new OWLXMLDocumentFormat();
             manager.saveOntology(ontology, justificationOntologyFormat, bufferedOutputStream);
         }
         catch (OWLOntologyStorageException e) {

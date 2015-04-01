@@ -1,10 +1,5 @@
 package org.semanticweb.owl.explanation.impl.blackbox;
 
-import org.semanticweb.owl.explanation.api.ExplanationGeneratorInterruptedException;
-import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.model.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -31,6 +26,28 @@ import java.util.Set;
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorInterruptedException;
+import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLDataProperty;
+import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLEntityVisitorEx;
+import org.semanticweb.owlapi.model.OWLNamedIndividual;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.parameters.Imports;
 
 
 /**
@@ -197,7 +214,7 @@ public class StructuralTypePriorityExpansionStrategy implements ExpansionStrateg
 
         public Set<? extends OWLAxiom> visit(OWLClass cls) {
             // Return axioms that define the class
-            Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(theOnt.getAxioms(cls));
+            Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(theOnt.getAxioms(cls,Imports.EXCLUDED));
 //            for(OWLAxiom ax : theOnt.getReferencingAxioms(cls)) {
 //                if (axioms.contains(ax)) {
 //                    if(ax.getAxiomType().equals(AxiomType.EQUIVALENT_CLASSES)) {
@@ -223,17 +240,17 @@ public class StructuralTypePriorityExpansionStrategy implements ExpansionStrateg
 
 
         public Set<? extends OWLAxiom> visit(OWLObjectProperty property) {
-            return theOnt.getAxioms(property);
+            return theOnt.getAxioms(property,Imports.EXCLUDED);
         }
 
 
         public Set<? extends OWLAxiom> visit(OWLDataProperty property) {
-            return theOnt.getAxioms(property);
+            return theOnt.getAxioms(property,Imports.EXCLUDED);
         }
 
 
         public Set<? extends OWLAxiom> visit(OWLNamedIndividual individual) {
-            Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(theOnt.getAxioms(individual));
+            Set<OWLAxiom> axioms = new HashSet<OWLAxiom>(theOnt.getAxioms(individual, Imports.EXCLUDED));
             for(OWLObjectPropertyAssertionAxiom ax : theOnt.getAxioms(AxiomType.OBJECT_PROPERTY_ASSERTION)) {
                 if(ax.getObject().equals(individual)) {
                     axioms.add(ax);       
