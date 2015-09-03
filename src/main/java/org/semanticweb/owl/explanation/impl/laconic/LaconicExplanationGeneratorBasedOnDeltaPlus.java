@@ -1,24 +1,25 @@
 package org.semanticweb.owl.explanation.impl.laconic;
 
-import org.semanticweb.owl.explanation.api.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.semanticweb.owl.explanation.api.Explanation;
+import org.semanticweb.owl.explanation.api.ExplanationException;
+import org.semanticweb.owl.explanation.api.ExplanationGenerator;
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorFactory;
+import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
 import org.semanticweb.owl.explanation.impl.blackbox.EntailmentCheckerFactory;
 import org.semanticweb.owl.explanation.impl.util.AxiomTransformation;
 import org.semanticweb.owl.explanation.impl.util.DeltaPlusTransformation;
-import org.semanticweb.owl.explanation.impl.util.DeltaTransformation;
 import org.semanticweb.owl.explanation.impl.util.DeltaTransformationUnfolder;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLOntologyManager;
-import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
-import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
+
 import uk.ac.manchester.cs.owlapi.modularity.ModuleType;
 import uk.ac.manchester.cs.owlapi.modularity.SyntacticLocalityModuleExtractor;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Author: Matthew Horridge<br>
@@ -68,7 +69,7 @@ public class LaconicExplanationGeneratorBasedOnDeltaPlus implements ExplanationG
         for(OWLAxiom ax : inputAxioms) {
             signature.addAll(ax.getSignature());
         }
-        final OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+        final OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
         AxiomTransformation transformation = new DeltaPlusTransformation(dataFactory);
         OWLOntologyManager man = OWLManager.createOWLOntologyManager();
         SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, null, inputAxioms, ModuleType.STAR);

@@ -1,21 +1,31 @@
 package org.semanticweb.owl.explanation.impl.laconic;
 
-import org.semanticweb.owl.explanation.api.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.semanticweb.owl.explanation.api.Explanation;
+import org.semanticweb.owl.explanation.api.ExplanationException;
+import org.semanticweb.owl.explanation.api.ExplanationGenerator;
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorFactory;
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorInterruptedException;
+import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
+import org.semanticweb.owl.explanation.api.ExplanationTelemetryWrapper;
+import org.semanticweb.owl.explanation.api.NullExplanationProgressMonitor;
 import org.semanticweb.owl.explanation.impl.blackbox.EntailmentCheckerFactory;
 import org.semanticweb.owl.explanation.telemetry.DefaultTelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTimer;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTransmitter;
-import org.semanticweb.owlapi.io.OWLObjectRenderer;
-import org.semanticweb.owlapi.io.ToStringRenderer;
+import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
-import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
-import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
-
-import java.util.*;
 
 /**
  * Author: Matthew Horridge<br>
@@ -31,7 +41,7 @@ public class LaconicExplanationGeneratorBasedOnIncrementalOPlusWithDeltaPlusFilt
 
     private EntailmentCheckerFactory<OWLAxiom> entailmentCheckerFactory;
 
-    private OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+    private OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
 
     private ExplanationProgressMonitor<OWLAxiom> progressMonitor = new NullExplanationProgressMonitor<OWLAxiom>();
 
@@ -187,13 +197,9 @@ public class LaconicExplanationGeneratorBasedOnIncrementalOPlusWithDeltaPlusFilt
             if (laconicExplanations.isEmpty()) {
                 System.out.println("I didn't find any oplus explanations that were laconic!!!");
                 System.out.println("Here's what I found:");
-                OWLObjectRenderer r = ToStringRenderer.getInstance().getRenderer();
-                ToStringRenderer.getInstance().setRenderer(new DLSyntaxObjectRenderer());
                 for (Explanation<OWLAxiom> expl : oplusExpls) {
                     System.out.println(expl);
                 }
-
-                ToStringRenderer.getInstance().setRenderer(r);
             }
 
             reconstituteTimer.start();

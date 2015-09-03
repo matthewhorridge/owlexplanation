@@ -1,12 +1,11 @@
 package org.semanticweb.owl.explanation.impl.rootderived;
 
-import org.semanticweb.owl.explanation.api.ExplanationException;
-import org.semanticweb.owl.explanation.api.RootDerivedReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.model.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 /*
  * Copyright (C) 2008, University of Manchester
  *
@@ -29,6 +28,45 @@ import java.util.*;
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
+import java.util.Set;
+import java.util.Stack;
+
+import org.semanticweb.owl.explanation.api.ExplanationException;
+import org.semanticweb.owl.explanation.api.RootDerivedReasoner;
+import org.semanticweb.owlapi.model.AxiomType;
+import org.semanticweb.owlapi.model.IRI;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLClassExpressionVisitor;
+import org.semanticweb.owlapi.model.OWLDataAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLDataExactCardinality;
+import org.semanticweb.owlapi.model.OWLDataHasValue;
+import org.semanticweb.owlapi.model.OWLDataMaxCardinality;
+import org.semanticweb.owlapi.model.OWLDataMinCardinality;
+import org.semanticweb.owlapi.model.OWLDataSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLDisjointClassesAxiom;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLObjectAllValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectComplementOf;
+import org.semanticweb.owlapi.model.OWLObjectExactCardinality;
+import org.semanticweb.owlapi.model.OWLObjectHasSelf;
+import org.semanticweb.owlapi.model.OWLObjectHasValue;
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLObjectMaxCardinality;
+import org.semanticweb.owlapi.model.OWLObjectMinCardinality;
+import org.semanticweb.owlapi.model.OWLObjectOneOf;
+import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
+import org.semanticweb.owlapi.model.OWLObjectSomeValuesFrom;
+import org.semanticweb.owlapi.model.OWLObjectUnionOf;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChange;
+import org.semanticweb.owlapi.model.OWLOntologyChangeException;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.RemoveAxiom;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 
 /**
@@ -265,10 +303,10 @@ public class StructuralRootDerivedReasoner implements RootDerivedReasoner {
         SuperClassChecker checker = new SuperClassChecker();
         for (OWLClass cls : unsatisfiableClasses) {
             checker.reset();
-            for (OWLClassExpression sup : cls.getSuperClasses(reasoner.getRootOntology().getImportsClosure())) {
+            for (OWLClassExpression sup : EntitySearcher.getSuperClasses(cls, reasoner.getRootOntology().getImportsClosure())) {
                 sup.accept(checker);
             }
-            for (OWLClassExpression sup : cls.getEquivalentClasses(reasoner.getRootOntology().getImportsClosure())) {
+            for (OWLClassExpression sup : EntitySearcher.getEquivalentClasses(cls, reasoner.getRootOntology().getImportsClosure())) {
                 sup.accept(checker);
             }
             Set<OWLClass> dependencies = checker.getDependencies();

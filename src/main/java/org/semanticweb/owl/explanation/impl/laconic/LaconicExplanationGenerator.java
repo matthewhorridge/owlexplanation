@@ -1,14 +1,34 @@
 package org.semanticweb.owl.explanation.impl.laconic;
 
-import org.semanticweb.owl.explanation.impl.blackbox.checker.SatisfiabilityEntailmentChecker;
-import org.semanticweb.owl.explanation.impl.blackbox.checker.SatisfiabilityEntailmentCheckerFactory;
-import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owl.explanation.api.*;
-import org.semanticweb.owl.explanation.api.Explanation;
-import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.*;
+import org.semanticweb.owl.explanation.api.Explanation;
+import org.semanticweb.owl.explanation.api.ExplanationException;
+import org.semanticweb.owl.explanation.api.ExplanationGenerator;
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorFactory;
+import org.semanticweb.owl.explanation.api.ExplanationGeneratorInterruptedException;
+import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
+import org.semanticweb.owl.explanation.api.NullExplanationProgressMonitor;
+import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLClassExpression;
+import org.semanticweb.owlapi.model.OWLEquivalentClassesAxiom;
+import org.semanticweb.owlapi.model.OWLException;
+import org.semanticweb.owlapi.model.OWLObjectIntersectionOf;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyChangeException;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLRuntimeException;
+import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+
+import uk.ac.manchester.cs.owl.explanation.ordering.MutableTree;
 
 /*
  * Copyright (C) 2008, University of Manchester

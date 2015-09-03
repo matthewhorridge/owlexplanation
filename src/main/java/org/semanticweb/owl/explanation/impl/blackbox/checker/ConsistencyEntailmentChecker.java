@@ -1,21 +1,24 @@
 package org.semanticweb.owl.explanation.impl.blackbox.checker;
 
 
+import java.util.Collections;
+import java.util.Set;
+
 import org.semanticweb.owl.explanation.telemetry.DefaultTelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTimer;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTransmitter;
-import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.model.OWLAxiom;
+import org.semanticweb.owlapi.model.OWLDataFactory;
+import org.semanticweb.owlapi.model.OWLEntity;
+import org.semanticweb.owlapi.model.OWLOntology;
+import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.OWLRuntimeException;
+import org.semanticweb.owlapi.reasoner.OWLReasoner;
+import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.reasoner.SimpleConfiguration;
-
-import java.util.Collections;
-import java.util.Set;
-
-import org.semanticweb.owlapi.reasoner.TimeOutException;
-import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 /*
  * Copyright (C) 2008, University of Manchester
  *
@@ -59,7 +62,7 @@ public class ConsistencyEntailmentChecker implements org.semanticweb.owl.explana
     public ConsistencyEntailmentChecker(OWLReasonerFactory reasonerFactory, long timeout) {
         this.timeout = timeout;
         this.reasonerFactory = reasonerFactory;
-        OWLDataFactory df = OWLDataFactoryImpl.getInstance();
+        OWLDataFactory df = OWLManager.getOWLDataFactory();
         this.entailment = df.getOWLSubClassOfAxiom(
                 df.getOWLThing(),
                 df.getOWLNothing()
