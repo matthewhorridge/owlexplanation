@@ -52,7 +52,7 @@ public class BlackBoxExplanationGenerator2<E> implements ExplanationGenerator<E>
 
     private ExplanationProgressMonitor<E> progressMonitor;
 
-    private Set<Explanation<E>> cache = new HashSet<Explanation<E>>();
+    private Set<Explanation<E>> cache = new HashSet<>();
 
     private TelemetryTimer generatorTimer = new TelemetryTimer();
 //    private TelemetryTimer findOneElapsedTimer;

@@ -6,14 +6,15 @@ import org.semanticweb.owl.explanation.telemetry.DefaultTelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryInfo;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTimer;
 import org.semanticweb.owl.explanation.telemetry.TelemetryTransmitter;
+import org.semanticweb.owlapi.dlsyntax.renderer.DLSyntaxObjectRenderer;
 import org.semanticweb.owlapi.io.OWLObjectRenderer;
 import org.semanticweb.owlapi.io.ToStringRenderer;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
+import org.semanticweb.owlapi.util.SimpleRenderer;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
-import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
 
 import java.util.*;
 
@@ -31,7 +32,7 @@ public class LaconicExplanationGeneratorBasedOnIncrementalOPlusWithDeltaPlusFilt
 
     private EntailmentCheckerFactory<OWLAxiom> entailmentCheckerFactory;
 
-    private OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+    private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
     private ExplanationProgressMonitor<OWLAxiom> progressMonitor = new NullExplanationProgressMonitor<OWLAxiom>();
 
@@ -187,13 +188,12 @@ public class LaconicExplanationGeneratorBasedOnIncrementalOPlusWithDeltaPlusFilt
             if (laconicExplanations.isEmpty()) {
                 System.out.println("I didn't find any oplus explanations that were laconic!!!");
                 System.out.println("Here's what I found:");
-                OWLObjectRenderer r = ToStringRenderer.getInstance().getRenderer();
                 ToStringRenderer.getInstance().setRenderer(new DLSyntaxObjectRenderer());
                 for (Explanation<OWLAxiom> expl : oplusExpls) {
                     System.out.println(expl);
                 }
 
-                ToStringRenderer.getInstance().setRenderer(r);
+                ToStringRenderer.getInstance().setRenderer(new SimpleRenderer());
             }
 
             reconstituteTimer.start();

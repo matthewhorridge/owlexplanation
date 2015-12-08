@@ -1,12 +1,10 @@
 package org.semanticweb.owl.explanation.impl.laconic;
 
-import org.semanticweb.owl.explanation.impl.blackbox.checker.SatisfiabilityEntailmentChecker;
-import org.semanticweb.owl.explanation.impl.blackbox.checker.SatisfiabilityEntailmentCheckerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owl.explanation.api.*;
 import org.semanticweb.owl.explanation.api.Explanation;
 import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
+import uk.ac.manchester.cs.owl.explanation.ordering.MutableTree;
 
 import java.util.*;
 

@@ -4,16 +4,10 @@ import org.semanticweb.owl.explanation.api.*;
 import org.semanticweb.owl.explanation.impl.blackbox.EntailmentCheckerFactory;
 import org.semanticweb.owl.explanation.impl.util.AxiomTransformation;
 import org.semanticweb.owl.explanation.impl.util.DeltaPlusTransformation;
-import org.semanticweb.owl.explanation.impl.util.DeltaTransformation;
 import org.semanticweb.owl.explanation.impl.util.DeltaTransformationUnfolder;
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.ToStringRenderer;
-import org.semanticweb.owlapi.model.OWLAxiom;
-import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLEntity;
-import org.semanticweb.owlapi.model.OWLOntologyManager;
+import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
-import uk.ac.manchester.cs.owlapi.dlsyntax.DLSyntaxObjectRenderer;
 import uk.ac.manchester.cs.owlapi.modularity.ModuleType;
 import uk.ac.manchester.cs.owlapi.modularity.SyntacticLocalityModuleExtractor;
 
@@ -68,10 +62,10 @@ public class LaconicExplanationGeneratorBasedOnDeltaPlus implements ExplanationG
         for(OWLAxiom ax : inputAxioms) {
             signature.addAll(ax.getSignature());
         }
-        final OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+        final OWLDataFactory dataFactory = new OWLDataFactoryImpl();
         AxiomTransformation transformation = new DeltaPlusTransformation(dataFactory);
         OWLOntologyManager man = OWLManager.createOWLOntologyManager();
-        SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, null, inputAxioms, ModuleType.STAR);
+        SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, (OWLOntology) null, inputAxioms, ModuleType.STAR);
         Set<OWLAxiom> moduleAxioms = extractor.extract(entailment.getSignature());
 //
 //        ExplanationGenerator<OWLAxiom> regGen = delegateFactory.createExplanationGenerator(inputAxioms, new NullExplanationProgressMonitor<OWLAxiom>());

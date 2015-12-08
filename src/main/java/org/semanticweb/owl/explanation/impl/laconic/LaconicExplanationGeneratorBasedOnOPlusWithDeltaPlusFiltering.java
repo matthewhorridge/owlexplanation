@@ -1,6 +1,5 @@
 package org.semanticweb.owl.explanation.impl.laconic;
 
-import com.clarkparsia.owlapi.modularity.locality.SyntacticLocalityEvaluator;
 import org.semanticweb.owl.explanation.api.*;
 import org.semanticweb.owl.explanation.impl.blackbox.EntailmentCheckerFactory;
 import org.semanticweb.owl.explanation.telemetry.DefaultTelemetryInfo;
@@ -88,7 +87,7 @@ public class LaconicExplanationGeneratorBasedOnOPlusWithDeltaPlusFiltering imple
 
         final Set<Explanation<OWLAxiom>> preferredLaconicExplanations;
         try {
-            OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+            OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
             OPlusGenerator transformation = new OPlusGenerator(dataFactory, oplusSplitting);
             OWLOntologyManager man = OWLManager.createOWLOntologyManager();
@@ -97,7 +96,7 @@ public class LaconicExplanationGeneratorBasedOnOPlusWithDeltaPlusFiltering imple
 
             Set<OWLAxiom> oplusInput;
             if (modularityTreatment.equals(ModularityTreatment.MODULE)) {
-                SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, null, inputAxioms, ModuleType.STAR);
+                SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, (OWLOntology) null, inputAxioms, ModuleType.STAR);
                 oplusInput = extractor.extract(entailment.getSignature());
             }
             else {

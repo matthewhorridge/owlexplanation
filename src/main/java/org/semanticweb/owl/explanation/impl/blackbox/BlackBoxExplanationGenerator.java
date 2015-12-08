@@ -4,11 +4,7 @@ import org.semanticweb.owl.explanation.api.*;
 import org.semanticweb.owl.explanation.api.Explanation;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
-import uk.ac.manchester.cs.bhig.util.NodeRenderer;
-import uk.ac.manchester.cs.bhig.util.Tree;
-import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
-import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
+import uk.ac.manchester.cs.owl.explanation.ordering.*;
 
 import java.io.*;
 import java.util.*;

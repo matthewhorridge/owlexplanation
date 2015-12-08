@@ -1,7 +1,7 @@
 package org.semanticweb.owl.explanation.api;
 
 import org.semanticweb.owlapi.apibinding.OWLManager;
-import org.semanticweb.owlapi.io.OWLXMLOntologyFormat;
+import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat;
 import org.semanticweb.owlapi.model.*;
 import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrderer;
 import uk.ac.manchester.cs.owl.explanation.ordering.ExplanationOrdererImpl;
@@ -193,13 +193,10 @@ public class Explanation<E> {
             OWLAxiom annotatedEntailment = explanation.getEntailment().getAnnotatedAxiom(Collections.singleton(entailmentAnnotation));
             manager.addAxiom(ontology, annotatedEntailment);
             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(os);
-            OWLXMLOntologyFormat justificationOntologyFormat = new OWLXMLOntologyFormat();
+            OWLXMLDocumentFormat justificationOntologyFormat = new OWLXMLDocumentFormat();
             manager.saveOntology(ontology, justificationOntologyFormat, bufferedOutputStream);
         }
-        catch (OWLOntologyStorageException e) {
-            throw new RuntimeException(e);
-        }
-        catch (OWLOntologyCreationException e) {
+        catch (OWLOntologyStorageException | OWLOntologyCreationException e) {
             throw new RuntimeException(e);
         }
 

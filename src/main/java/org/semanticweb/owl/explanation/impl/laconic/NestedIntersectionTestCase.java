@@ -45,7 +45,7 @@ public class NestedIntersectionTestCase {
         OWLClass clsA = Class("A", pm);
         OWLClass clsB = Class("B", pm);
         OWLClassExpression ce = ObjectIntersectionOf(clsA, ObjectIntersectionOf(clsB, clsA));
-        TauGenerator tauGenerator = new TauGenerator(OWLDataFactoryImpl.getInstance());
+        TauGenerator tauGenerator = new TauGenerator(new OWLDataFactoryImpl());
         Set<OWLClassExpression> classExpressions = ce.accept(tauGenerator);
         for(OWLClassExpression classExpression : classExpressions) {
             System.out.println(classExpression);

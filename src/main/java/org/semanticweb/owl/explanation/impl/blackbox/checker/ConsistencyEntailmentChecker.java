@@ -59,7 +59,7 @@ public class ConsistencyEntailmentChecker implements org.semanticweb.owl.explana
     public ConsistencyEntailmentChecker(OWLReasonerFactory reasonerFactory, long timeout) {
         this.timeout = timeout;
         this.reasonerFactory = reasonerFactory;
-        OWLDataFactory df = OWLDataFactoryImpl.getInstance();
+        OWLDataFactory df = new OWLDataFactoryImpl();
         this.entailment = df.getOWLSubClassOfAxiom(
                 df.getOWLThing(),
                 df.getOWLNothing()

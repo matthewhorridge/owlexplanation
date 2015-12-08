@@ -5,6 +5,7 @@ import org.semanticweb.owl.explanation.api.RootDerivedReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 import java.util.*;
 /*
@@ -265,10 +266,10 @@ public class StructuralRootDerivedReasoner implements RootDerivedReasoner {
         SuperClassChecker checker = new SuperClassChecker();
         for (OWLClass cls : unsatisfiableClasses) {
             checker.reset();
-            for (OWLClassExpression sup : cls.getSuperClasses(reasoner.getRootOntology().getImportsClosure())) {
+            for (OWLClassExpression sup : EntitySearcher.getSuperClasses(cls, reasoner.getRootOntology().getImportsClosure())) {
                 sup.accept(checker);
             }
-            for (OWLClassExpression sup : cls.getEquivalentClasses(reasoner.getRootOntology().getImportsClosure())) {
+            for (OWLClassExpression sup : EntitySearcher.getEquivalentClasses(cls, reasoner.getRootOntology().getImportsClosure())) {
                 sup.accept(checker);
             }
             Set<OWLClass> dependencies = checker.getDependencies();

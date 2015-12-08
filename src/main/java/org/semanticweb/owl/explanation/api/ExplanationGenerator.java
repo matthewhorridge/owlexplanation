@@ -1,10 +1,6 @@
 package org.semanticweb.owl.explanation.api;
 
-import uk.ac.manchester.cs.bhig.util.Tree;
-import uk.ac.manchester.cs.bhig.util.MutableTree;
-
 import java.util.Set;
-import java.util.List;
 /*
  * Copyright (C) 2008, University of Manchester
  *

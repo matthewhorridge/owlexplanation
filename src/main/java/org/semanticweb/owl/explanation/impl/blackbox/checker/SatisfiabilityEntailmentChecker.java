@@ -144,40 +144,25 @@ public class SatisfiabilityEntailmentChecker implements EntailmentChecker<OWLAxi
     public Set<OWLAxiom> getModule(Set<OWLAxiom> axioms) {
 
         if (useModularisation) {
-//            Thread.dumpStack();
             if (axioms.isEmpty()) {
                 return Collections.emptySet();
             }
-            Set<OWLAxiom> inputAxioms = null;
-//            if (getEntailment() instanceof OWLSubClassOfAxiom) {
-//                boolean containsNominals = false;
-//                AxiomsSplitter splitter = new AxiomsSplitter(axioms.size());
-//                for(OWLAxiom ax : axioms) {
-//                    ax.accept(splitter);
-//                    if(containsNominals(ax)) {
-//                        containsNominals = true;
-//                        break;
-//                    }
-//                }
-//                if(containsNominals) {
-//                    inputAxioms = axioms;
-//                }
-//                else {
-//                    inputAxioms = splitter.tboxAxioms;
-//                }
-//            }
-//            else {
-                inputAxioms = axioms;
-//            }
 
             OWLOntologyManager man2 = OWLManager.createOWLOntologyManager();
             moduleType = ModuleType.STAR;
-            SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man2, null, inputAxioms, moduleType);
-            Set<OWLAxiom> module = extractor.extract(getEntailmentSignature());
-            return module;
+            SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man2, createEmptyOntology(man2), axioms, moduleType);
+            return extractor.extract(getEntailmentSignature());
         }
         else {
             return axioms;
+        }
+    }
+
+    private static OWLOntology createEmptyOntology(OWLOntologyManager man) {
+        try {
+            return man.createOntology();
+        } catch (OWLOntologyCreationException e) {
+            throw new RuntimeException(e);
         }
     }
 

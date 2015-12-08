@@ -5,7 +5,6 @@ import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLObject;
 import org.semanticweb.owlapi.util.AxiomSubjectProvider;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -25,10 +24,11 @@ public class OrderedDivideAndConquerStrategy implements ContractionStrategy {
 
     public Set<OWLAxiom> doPruning(Set<OWLAxiom> axioms, EntailmentChecker checker, ExplanationProgressMonitor<?> progressMonitor) {
         count = 0;
-        LinkedHashSet<OWLAxiom> orderedAxioms = new LinkedHashSet<OWLAxiom>();
+        LinkedHashSet<OWLAxiom> orderedAxioms = new LinkedHashSet<>();
         AxiomSubjectProvider subjectProvider = new AxiomSubjectProvider();
-        Map<OWLObject, Set<OWLAxiom>> axiomsBySubject = new HashMap<OWLObject, Set<OWLAxiom>>();
+        Map<OWLObject, Set<OWLAxiom>> axiomsBySubject = new HashMap<>();
         for(OWLAxiom ax : axioms) {
+            ax.getClassesInSignature();
             OWLObject object = subjectProvider.getSubject(ax);
             Set<OWLAxiom> axiomsSet = axiomsBySubject.get(object);
             axiomsBySubject.put(object, axiomsSet);

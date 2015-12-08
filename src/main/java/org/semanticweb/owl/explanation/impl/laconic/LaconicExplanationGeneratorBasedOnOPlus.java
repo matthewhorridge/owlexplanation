@@ -59,14 +59,14 @@ public class LaconicExplanationGeneratorBasedOnOPlus implements ExplanationGener
      */
     public Set<Explanation<OWLAxiom>> getExplanations(OWLAxiom entailment, int limit) throws ExplanationException {
 
-        OWLDataFactory dataFactory = OWLDataFactoryImpl.getInstance();
+        OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
         OPlusGenerator transformation = new OPlusGenerator(dataFactory, oplusSplitting);
         OWLOntologyManager man = OWLManager.createOWLOntologyManager();
 
         Set<OWLAxiom> oplusInput;
         if(modularityTreatment.equals(ModularityTreatment.MODULE)) {
-            SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, null, inputAxioms, ModuleType.STAR);
+            SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(man, (OWLOntology) null, inputAxioms, ModuleType.STAR);
             oplusInput = extractor.extract(entailment.getSignature());
         }
         else {

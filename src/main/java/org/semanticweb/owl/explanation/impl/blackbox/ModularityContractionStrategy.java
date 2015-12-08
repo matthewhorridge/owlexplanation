@@ -3,7 +3,7 @@ package org.semanticweb.owl.explanation.impl.blackbox;
 import org.semanticweb.owl.explanation.api.ExplanationProgressMonitor;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import uk.ac.manchester.cs.bhig.util.Tree;
+import uk.ac.manchester.cs.owl.explanation.ordering.Tree;
 import uk.ac.manchester.cs.owlapi.modularity.ModuleType;
 import uk.ac.manchester.cs.owlapi.modularity.SyntacticLocalityModuleExtractor;
 

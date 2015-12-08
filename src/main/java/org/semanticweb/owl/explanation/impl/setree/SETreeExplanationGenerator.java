@@ -61,7 +61,7 @@ public class SETreeExplanationGenerator implements ExplanationGenerator<OWLAxiom
      */
     public Set<Explanation<OWLAxiom>> getExplanations(OWLAxiom entailment, int limit) throws ExplanationException {
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-        SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(manager, null, workingAxioms, ModuleType.STAR);
+        SyntacticLocalityModuleExtractor extractor = new SyntacticLocalityModuleExtractor(manager, (OWLOntology) null, workingAxioms, ModuleType.STAR);
         module = extractor.extract(entailment.getSignature());
         BlackBoxExplanationGenerator2<OWLAxiom> gen = new BlackBoxExplanationGenerator2<OWLAxiom>(module, entailmentCheckerFactory, new StructuralTypePriorityExpansionStrategy(), new DivideAndConquerContractionStrategy(), new NullExplanationProgressMonitor<OWLAxiom>());
         Set<Explanation<OWLAxiom>> expls = gen.getExplanations(entailment, 1);
