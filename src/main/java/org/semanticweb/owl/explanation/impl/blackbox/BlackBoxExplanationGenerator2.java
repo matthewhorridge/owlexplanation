@@ -104,6 +104,14 @@ public class BlackBoxExplanationGenerator2<E> implements ExplanationGenerator<E>
 
             EntailmentChecker<E> checker = checkerFactory.createEntailementChecker(entailment);
 
+            // Check for a tautology
+            if(checker.isEntailed(Collections.emptySet())) {
+                Explanation<E> emptyExplanation = Explanation.getEmptyExplanation(entailment);
+                Set<Explanation<E>> allExplanations = Collections.singleton(emptyExplanation);
+                progressMonitor.foundExplanation(this, emptyExplanation, allExplanations);
+                return allExplanations;
+            }
+
             extractModule(checker);
 
 
