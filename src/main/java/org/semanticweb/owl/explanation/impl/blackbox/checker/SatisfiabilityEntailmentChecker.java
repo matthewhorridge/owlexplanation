@@ -252,17 +252,6 @@ public class SatisfiabilityEntailmentChecker implements EntailmentChecker<OWLAxi
             throw e;
         }
         catch (RuntimeException e) {
-            try {
-                if (ont != null) {
-                    ont.getOWLOntologyManager().saveOntology(ont, new FileOutputStream(new File("/tmp/lasterror.owl")));
-                }
-            }
-            catch (OWLOntologyStorageException e1) {
-                e1.printStackTrace();
-            }
-            catch (FileNotFoundException e1) {
-                e1.printStackTrace();
-            }
             transmitter.recordException(info, e);
             throw e;
         }
