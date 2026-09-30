@@ -1,6 +1,6 @@
 # Releasing OWL Explanation
 
-Releases are built from the `version5` branch and published to Maven Central by
+Releases are built from the `main` branch and published to Maven Central by
 GitHub Actions. The process is intentionally explicit so that the published
 artifacts can always be traced to a reviewed commit and immutable tag.
 
@@ -18,14 +18,14 @@ Maven Central Portal credentials. The associated Central account must have
 permission to publish the `net.sourceforge.owlapi` namespace.
 
 Before starting, confirm that the intended version has not already been
-published and that the `version5` branch is passing CI.
+published and that the `main` branch is passing CI.
 
 ## 1. Prepare the release version
 
-Create a branch from the latest `version5` branch:
+Create a branch from the latest `main` branch:
 
 ```bash
-git switch version5
+git switch main
 git pull --ff-only
 git switch -c release-5.0.1
 ```
@@ -63,15 +63,15 @@ git commit -m "Set version to 5.0.1"
 git push --set-upstream origin release-5.0.1
 ```
 
-Open a pull request into `version5`. **Review the diff, wait for all CI checks
+Open a pull request into `main`. **Review the diff, wait for all CI checks
 to pass, and then merge it.**
 
 ## 3. Tag the release
 
-Update the local `version5` branch after merging the pull request:
+Update the local `main` branch after merging the pull request:
 
 ```bash
-git switch version5
+git switch main
 git pull --ff-only
 ```
 
@@ -104,10 +104,10 @@ tag in the GitHub release form.
 
 ## 5. Start the next development version
 
-Create another branch from `version5` and set the next snapshot version:
+Create another branch from `main` and set the next snapshot version:
 
 ```bash
-git switch version5
+git switch main
 git pull --ff-only
 git switch -c start-5.0.2-development
 mvn --batch-mode versions:set \
@@ -115,12 +115,12 @@ mvn --batch-mode versions:set \
   -DgenerateBackupPoms=false
 ```
 
-Commit the change and merge it into `version5` through a pull request.
+Commit the change and merge it into `main` through a pull request.
 
 ## Publishing a snapshot
 
 To publish a snapshot, manually run the **Publish packages to the Maven Central
-Repository** workflow and select the `version5` branch. The selected branch
+Repository** workflow and select the `main` branch. The selected branch
 must contain a version ending in `-SNAPSHOT`; otherwise, the workflow fails
 without publishing anything.
 

@@ -3,10 +3,10 @@ name: Build
 on:
   push:
     branches:
-      - version5
+      - main
   pull_request:
     branches:
-      - version5
+      - main
 
 jobs:
   build:
