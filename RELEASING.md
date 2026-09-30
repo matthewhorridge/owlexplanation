@@ -4,22 +4,6 @@ Releases are built from the `main` branch and published to Maven Central by
 GitHub Actions. The process is intentionally explicit so that the published
 artifacts can always be traced to a reviewed commit and immutable tag.
 
-## Prerequisites
-
-The repository must contain these GitHub Actions secrets:
-
-- `GPG_PRIVATE_KEY`
-- `GPG_PASSPHRASE`
-- `OSSRH_USERNAME`
-- `OSSRH_TOKEN`
-
-Despite their OSSRH-prefixed names, `OSSRH_USERNAME` and `OSSRH_TOKEN` contain
-Maven Central Portal credentials. The associated Central account must have
-permission to publish the `net.sourceforge.owlapi` namespace.
-
-Before starting, confirm that the intended version has not already been
-published and that the `main` branch is passing CI.
-
 ## 1. Prepare the release version
 
 Create a branch from the latest `main` branch:
