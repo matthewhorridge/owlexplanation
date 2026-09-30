@@ -20,7 +20,7 @@
 	<name>OWL Explanation</name>
 	<groupId>net.sourceforge.owlapi</groupId>
 	<artifactId>owlexplanation</artifactId>
-	<version>5.0.1</version>
+	<version>5.0.2-SNAPSHOT</version>
 	<packaging>bundle</packaging>
 	<url>https://github.com/matthewhorridge/owlexplanation</url>
 	<description>OWL Explanation Generator - see http://www.bcs.org/upload/pdf/dd-matthew-horridge.pdf
