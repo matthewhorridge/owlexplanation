@@ -3,10 +3,6 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<prerequisites>
-		<maven>3.0.5</maven>
-	</prerequisites>
-
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
 		<artifactId>oss-parent</artifactId>
@@ -26,12 +22,14 @@
 	<artifactId>owlexplanation</artifactId>
 	<version>5.0.1-SNAPSHOT</version>
 	<packaging>bundle</packaging>
+	<url>https://github.com/matthewhorridge/owlexplanation</url>
 	<description>OWL Explanation Generator - see http://www.bcs.org/upload/pdf/dd-matthew-horridge.pdf
 	</description>
 	<scm>
-		<url>git@github.com:matthewhorridge/owlexplanation.git</url>
-		<connection>scm:git:git://github.com/matthewhorridge/owlexplanation.git</connection>
+		<url>https://github.com/matthewhorridge/owlexplanation</url>
+		<connection>scm:git:https://github.com/matthewhorridge/owlexplanation.git</connection>
 		<developerConnection>scm:git:git@github.com:matthewhorridge/owlexplanation.git</developerConnection>
+		<tag>HEAD</tag>
 	</scm>
 
 	<developers>
@@ -41,6 +39,17 @@
 			<email>matthew.horridge@stanford.edu</email>
 		</developer>
 	</developers>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://central.sonatype.com/repository/maven-snapshots/</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://central.sonatype.com</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -52,6 +61,11 @@
 			<groupId>net.sourceforge.owlapi</groupId>
 			<artifactId>owlapi-tools</artifactId>
 			<version>${owlapi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.vsonnier</groupId>
+			<artifactId>hppcrt</artifactId>
+			<version>0.7.5</version>
 		</dependency>
 		<dependency>
 			<groupId>net.sourceforge.owlapi</groupId>
@@ -113,18 +127,15 @@
 	<profiles>
 		<profile>
 			<id>release</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
 			<build>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.6</version>
+						<version>3.2.7</version>
+						<configuration>
+							<skip>${release.signing.disabled}</skip>
+						</configuration>
 						<executions>
 							<execution>
 								<id>sign-artifacts</id>
@@ -135,6 +146,17 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>org.sonatype.central</groupId>
+						<artifactId>central-publishing-maven-plugin</artifactId>
+						<version>0.9.0</version>
+						<extensions>true</extensions>
+						<configuration>
+							<publishingServerId>ossrh</publishingServerId>
+							<autoPublish>true</autoPublish>
+							<waitUntil>published</waitUntil>
+						</configuration>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
@@ -142,26 +164,40 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<owlapi.version>[5.0.0,5.9.9]</owlapi.version>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.javadoc.failOnError>false</maven.javadoc.failOnError>
+		<owlapi.version>5.5.1</owlapi.version>
 	</properties>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.4.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<propertiesEncoding>UTF-8</propertiesEncoding>
+				</configuration>
+			</plugin>
 			<!-- In the Compiler Plugin we specify the encoding and the compiler version. -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
+				<version>3.14.0</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<release>8</release>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.2.0</version>
+				<version>5.1.9</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
@@ -170,7 +206,7 @@
 						<Bundle-Vendor>Matthew Horridge</Bundle-Vendor>
 						<Export-Package>{local-packages}</Export-Package>
 						<Import-Package>
-							org.semanticweb.owlapi;version="5.1.2-SNAPSHOT",
+							org.semanticweb.owlapi.*;version="[5.0,6)",
 							*
 						</Import-Package>
 					</instructions>
@@ -180,13 +216,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>3.3.1</version>
 				<executions>
 					<!-- Attach sources. -->
 					<execution>
 						<id>attach-sources</id>
 						<goals>
-							<goal>jar</goal>
+							<goal>jar-no-fork</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -194,7 +230,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.4</version>
+				<version>3.11.2</version>
+				<configuration>
+					<doclint>none</doclint>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -208,7 +247,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
+				<version>3.5.2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>3.1.4</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>3.1.4</version>
 			</plugin>
 		</plugins>
 	</build>
