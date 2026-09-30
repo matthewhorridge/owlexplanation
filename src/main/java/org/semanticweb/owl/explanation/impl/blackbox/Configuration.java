@@ -60,12 +60,19 @@ public class Configuration<E> {
 
 
     public Configuration(EntailmentCheckerFactory<E> checkerFactory, Supplier<OWLOntologyManager> m) {
-        this(checkerFactory, new StructuralTypePriorityExpansionStrategy<E>(null, m), new DivideAndConquerContractionStrategy<E>(), m);
+        this(checkerFactory,
+                new StructuralTypePriorityExpansionStrategy<E>(InitialEntailmentCheckStrategy.PERFORM, m),
+                new DivideAndConquerContractionStrategy<E>(),
+                m);
     }
 
 
     public Configuration(EntailmentCheckerFactory<E> checkerFactory, ExplanationProgressMonitor<E> progressMonitor, Supplier<OWLOntologyManager> m) {
-        this(checkerFactory, new StructuralTypePriorityExpansionStrategy<E>(null, m), new DivideAndConquerContractionStrategy<E>(), progressMonitor, m);
+        this(checkerFactory,
+                new StructuralTypePriorityExpansionStrategy<E>(InitialEntailmentCheckStrategy.PERFORM, m),
+                new DivideAndConquerContractionStrategy<E>(),
+                progressMonitor,
+                m);
     }
 
 
