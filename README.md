@@ -1,6 +1,6 @@
 # OWL Explanation
 
-[![Build](https://github.com/matthewhorridge/owlexplanation/actions/workflows/build.yml/badge.svg?branch=version5)](https://github.com/matthewhorridge/owlexplanation/actions/workflows/build.yml)
+[![Build](https://github.com/matthewhorridge/owlexplanation/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/matthewhorridge/owlexplanation/actions/workflows/build.yml)
 
 An API and reference implementation for generating justifications for entailments in OWL ontologies.
 
